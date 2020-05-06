@@ -2,7 +2,7 @@
 
 Main repository for custom plantsharing.de content:
 
- - ``locale``:  contains translations of the original karrot landing page. Parts have been adapted to fit [plantsharing.de](plantsharing.de).
+ - contains translations of the original karrot landing page. Parts have been adapted to fit [plantsharing.de](plantsharing.de).
  - media (logo, pictures, …) will follow soon
 
 
