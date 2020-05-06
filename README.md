@@ -11,5 +11,4 @@ Furthermore:
  - [plantsharing.de 🌱](plantsharing.de) runs its own customized instance of [karrot 🥕](https://github.com/yunity/karrot-frontend/). It is deliberately not a fork.
  - to [contact 💬](https://github.com/yunity/karrot-frontend/blob/02cb0bb01e46d4815a1267a2c1229ec16ff690af/docs/README.md) us, or if you want to [contribute](https://github.com/yunity/karrot-frontend/blob/master/CONTRIBUTE.md), please just use karrot's communication channels and join ``#plantsharing`` and ``#karrot-dev``.
  - thanks to [uberspace 🚀](https://uberspace.de) for many years of amazing service, help, and inspiration!
- - thanks to [weblate 🌐](https://weblate.org) for providing their hosted (FOSS) translation interface! Let's be optimistic.
 
