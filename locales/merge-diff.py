@@ -24,19 +24,18 @@ def get_file(lang_code):
         shutil.copyfileobj(response, out_file)
     return True
 
-def traverse_dict(base_content, head_content, keep, cond_func):
+def traverse_dict(base_content, head_content, keep, branch_func, leaf_func):
     # only keep the differences in head_file
     # print(head_content)
     for k,v in head_content.items():
         # everything is either a string or a dict
         if isinstance(v, str):
             # if this function is true, keep the head value v
-            if cond_func(base_content, k, v):
+            if leaf_func(base_content, k, v):
                 keep[k] = v
         if isinstance(v, dict):
-            new_dict = traverse_dict(base_content[k], v, {}, cond_func)
-            # only append non-empty dicts
-            if len(new_dict) > 0:
+            new_dict = traverse_dict(base_content[k], v, {}, branch_func, leaf_func)
+            if branch_func(new_dict):
                 keep[k] = new_dict
     return keep
 
@@ -47,12 +46,16 @@ def keep_diff(base_file, head_file, diff_file):
             return False
         return base_content[k] != v
 
+    def _branch_func(new_dict):
+        # only append non-empty dicts
+        return len(new_dict) > 0
+
     print("Writing diff to {}".format(diff_file))
     with open(base_file, 'r') as base_fh:
         base_content = json.load(base_fh)
     with open(head_file, 'r') as head_fh:
         head_content = json.load(head_fh)
-    diffed_content = traverse_dict(base_content, head_content, {}, _diff_content_f)
+    diffed_content = traverse_dict(base_content, head_content, {}, _branch_func, _diff_content_f)
     with open(diff_file, 'w') as result_fh:
         json.dump(diffed_content, result_fh, indent=4)
     return True
@@ -70,6 +73,10 @@ def merge_file(base_file, head_file, file_name):
     def _merge_overwrite_f(base_content, k, v):
         return True
 
+    def _branch_func(new_dict):
+        # overwrite everything that is defined
+        return True
+
     # requirements
     result_file = os.path.join(result_dir, file_name)
     if not os.path.isfile(head_file):
@@ -82,7 +89,7 @@ def merge_file(base_file, head_file, file_name):
         head_content = json.load(head_fh)
     # merged_content = merge_content(base_content, head_content)
     # merge the already existing base_content with the new head_content
-    merged_content = traverse_dict(base_content, head_content, base_content, _merge_overwrite_f)
+    merged_content = traverse_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f)
     with open(result_file, 'w') as result_fh:
         json.dump(merged_content, result_fh, indent=4)
     return True
