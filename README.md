@@ -3,6 +3,8 @@
 Main repository for custom plantsharing.de content:
 
  - contains translations of the karrot landing page. Parts have been adapted to fit [plantsharing.de 🌱](plantsharing.de).
+     - edit the ``diff-*`` files in ``./locales/plantsharing``, then run ``./locales/merge-diff.py`` to generate ``./locales/result``.
+     - to create the diff files in the first place edit the locales in ``./locales/plantsharing/``, edit the script and run it.
  - media (bg, fonts, logo, pictures, …)
 
 
