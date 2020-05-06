@@ -14,13 +14,6 @@ assert os.path.isdir(karrot_dir), "Please create {}".format(result_dir)
 assert os.path.isdir(plantsharing_dir), "Please create {}".format(result_dir)
 assert os.path.isdir(result_dir), "Please create {}".format(result_dir)
 
-def merge_content(base_content, head_content):
-    merged_content = {}
-    # merge
-    merged_content.update(base_content)
-    merged_content.update(head_content)
-    return merged_content
-
 def get_file(lang_code):
     file_name = "locale-{}.json".format(lang_code)
     print("Updating {}".format(file_name))
@@ -31,8 +24,52 @@ def get_file(lang_code):
         shutil.copyfileobj(response, out_file)
     return True
 
+def traverse_dict(base_content, head_content, keep, cond_func):
+    # only keep the differences in head_file
+    # print(head_content)
+    for k,v in head_content.items():
+        if k not in base_content:
+            continue
+        # everything is either a string or a dict
+        if isinstance(v, str):
+            # if this function is true, keep the head value v
+            if cond_func(base_content, k, v):
+                keep[k] = v
+        if isinstance(v, dict):
+            new_dict = traverse_dict(base_content[k], v, {}, cond_func)
+            # only append non-empty dicts
+            if len(new_dict) > 0:
+                keep[k] = new_dict
+    return keep
+
+def keep_diff(base_file, head_file, diff_file):
+
+    def _diff_content_f(base_content, k, v):
+        return base_content[k] != v
+
+    print("Writing diff to {}".format(diff_file))
+    with open(base_file, 'r') as base_fh:
+        base_content = json.load(base_fh)
+    with open(head_file, 'r') as head_fh:
+        head_content = json.load(head_fh)
+    diffed_content = traverse_dict(base_content, head_content, {}, _diff_content_f)
+    with open(diff_file, 'w') as result_fh:
+        json.dump(diffed_content, result_fh, indent=4)
+    return True
+
+#def merge_content(base_content, head_content):
+#    # merge
+#    merged_content.update(base_content)
+#    merged_content.update(head_content)
+#    return merged_content
+
+
 def merge_file(base_file, head_file, file_name):
     print("Merging {}".format(base_file))
+
+    def _merge_overwrite_f(base_content, k, v):
+        return True
+
     # requirements
     result_file = os.path.join(result_dir, file_name)
     if not os.path.isfile(head_file):
@@ -43,39 +80,12 @@ def merge_file(base_file, head_file, file_name):
         base_content = json.load(base_fh)
     with open(head_file, 'r') as head_fh:
         head_content = json.load(head_fh)
-    merged_content = merge_content(base_content, head_content)
+    # merged_content = merge_content(base_content, head_content)
+    merged_content = traverse_dict(base_content, head_content, {}, _merge_overwrite_f)
     with open(result_file, 'w') as result_fh:
         json.dump(merged_content, result_fh, indent=4)
     return True
 
-def diff_content(base_content, head_content, keep):
-    # only keep the differences in head_file
-    # print(head_content)
-    for k,v in head_content.items():
-        if k not in base_content:
-            continue
-        # everything is either a string or a dict
-        if isinstance(v, str):
-            if base_content[k] != v:
-                keep[k] = v
-        if isinstance(v, dict):
-            new_dict = diff_content(base_content[k], v, {})
-            # only append non-empty dicts
-            if len(new_dict) > 0:
-                keep[k] = new_dict
-    return keep
-
-
-def keep_diff(base_file, head_file, diff_file):
-    print("Writing diff to {}".format(diff_file))
-    with open(base_file, 'r') as base_fh:
-        base_content = json.load(base_fh)
-    with open(head_file, 'r') as head_fh:
-        head_content = json.load(head_fh)
-    diffed_content = diff_content(base_content, head_content, {})
-    with open(diff_file, 'w') as result_fh:
-        json.dump(diffed_content, result_fh, indent=4)
-    return True
 
 UPDATE_LANG_CODES = ['de', 'en']
 
