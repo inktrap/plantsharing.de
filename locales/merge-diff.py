@@ -86,9 +86,10 @@ def main():
 
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
         file_name = os.path.basename(base_file)
-        head_file = os.path.join(plantsharing_dir, file_name)
         diff_file = os.path.join(plantsharing_dir, "diff-" + file_name)
-        keep_diff(base_file, head_file, diff_file)
+        ## keep diff only needs to run initially. simply change the diff from then on.
+        # head_file = os.path.join(plantsharing_dir, file_name)
+        # keep_diff(base_file, head_file, diff_file)
         merge_file(base_file, diff_file, file_name)
 
 if __name__ == "__main__":
