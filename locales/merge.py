@@ -2,6 +2,8 @@
 import json
 import os
 import glob
+import urllib.request
+import shutil
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
 karrot_dir = os.path.join(script_dir, 'karrot')
@@ -18,6 +20,14 @@ def merge_content(base_content, head_content):
     merged_content.update(base_content)
     merged_content.update(head_content)
     return merged_content
+
+def get_file(file_name):
+    this_url = "https://raw.githubusercontent.com/yunity/karrot-frontend/master/src/locales/{}".format(file_name)
+    result_file = os.path.join(karrot_dir, file_name)
+
+    with urllib.request.urlopen(this_url) as response, open(result_file, 'wb') as out_file:
+        shutil.copyfileobj(response, out_file)
+    return True
 
 def merge_file(base_file):
     # requirements
@@ -38,7 +48,15 @@ def merge_file(base_file):
     return True
 
 
+UPDATE_LANG_CODES = ['de', 'en']
+
 def main():
+
+    for lang_code in UPDATE_LANG_CODES:
+        file_name = "locale-{}.json".format(lang_code)
+        print("Updating {}".format(file_name))
+        get_file(file_name)
+
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
         print("Merging {}".format(base_file))
         merge_file(base_file)
