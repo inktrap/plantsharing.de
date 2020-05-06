@@ -21,7 +21,9 @@ def merge_content(base_content, head_content):
     merged_content.update(head_content)
     return merged_content
 
-def get_file(file_name):
+def get_file(lang_code):
+    file_name = "locale-{}.json".format(lang_code)
+    print("Updating {}".format(file_name))
     this_url = "https://raw.githubusercontent.com/yunity/karrot-frontend/master/src/locales/{}".format(file_name)
     result_file = os.path.join(karrot_dir, file_name)
 
@@ -29,10 +31,9 @@ def get_file(file_name):
         shutil.copyfileobj(response, out_file)
     return True
 
-def merge_file(base_file):
+def merge_file(base_file, head_file, file_name):
+    print("Merging {}".format(base_file))
     # requirements
-    file_name = os.path.basename(base_file)
-    head_file = os.path.join(plantsharing_dir, file_name)
     result_file = os.path.join(result_dir, file_name)
     if not os.path.isfile(head_file):
         print("Warning: {} does not exist, copying {}".format(head_file, base_file))
@@ -44,22 +45,51 @@ def merge_file(base_file):
         head_content = json.load(head_fh)
     merged_content = merge_content(base_content, head_content)
     with open(result_file, 'w') as result_fh:
-        json.dump(merged_content, result_fh)
+        json.dump(merged_content, result_fh, indent=4)
     return True
 
+def diff_content(base_content, head_content, keep):
+    # only keep the differences in head_file
+    # print(head_content)
+    for k,v in head_content.items():
+        if k not in base_content:
+            continue
+        # everything is either a string or a dict
+        if isinstance(v, str):
+            if base_content[k] != v:
+                keep[k] = v
+        if isinstance(v, dict):
+            new_dict = diff_content(base_content[k], v, {})
+            # only append non-empty dicts
+            if len(new_dict) > 0:
+                keep[k] = new_dict
+    return keep
+
+
+def keep_diff(base_file, head_file, diff_file):
+    print("Writing diff to {}".format(diff_file))
+    with open(base_file, 'r') as base_fh:
+        base_content = json.load(base_fh)
+    with open(head_file, 'r') as head_fh:
+        head_content = json.load(head_fh)
+    diffed_content = diff_content(base_content, head_content, {})
+    with open(diff_file, 'w') as result_fh:
+        json.dump(diffed_content, result_fh, indent=4)
+    return True
 
 UPDATE_LANG_CODES = ['de', 'en']
 
 def main():
 
     for lang_code in UPDATE_LANG_CODES:
-        file_name = "locale-{}.json".format(lang_code)
-        print("Updating {}".format(file_name))
-        get_file(file_name)
+        get_file(lang_code)
 
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-        print("Merging {}".format(base_file))
-        merge_file(base_file)
+        file_name = os.path.basename(base_file)
+        head_file = os.path.join(plantsharing_dir, file_name)
+        diff_file = os.path.join(plantsharing_dir, "diff-" + file_name)
+        keep_diff(base_file, head_file, diff_file)
+        merge_file(base_file, diff_file, file_name)
 
 if __name__ == "__main__":
     main()
