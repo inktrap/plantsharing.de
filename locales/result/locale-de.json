@@ -697,7 +697,7 @@
     "YOU": "Du",
     "TO": "bis",
     "ABOUT_KARROT": {
-        "TITLE": "Teile Pflanzen und lasse was gutes wachsen",
+        "TITLE": "Teile Pflanzen und lass was gutes wachsen",
         "SUBTITLE1": "Plantsharing existiert für Leute, die Pflanzen, und alles was damit verbunden ist, teilen wollen. Das läuft über karrot, welches Gruppen erlaubt, sich selbst zu bilden und effizient auf lokaler, freiwilliger Grundlage zu organisieren.",
         "SUBTITLE2": "Tu dir keinen Zwang an und teile ganze Pflanzen, Saatgut und Setzlinge, ebenso wie alles, was mit dem Wohlbefinden von Pflanzen in Zusammenhang steht, wie etwa Blumenerde, Dünger, oder Blumentöpfe.",
         "VISION_INTRO": "Plantsharing will, dass du mit anderen in Verbindung trittst und interagierst, es fördert Aktivitäten von Angesicht zu Angesicht durch Karotts Schicht digitaler Infrastruktur.",
@@ -705,7 +705,7 @@
         "ACTION_START_A_GROUP": "Gründe eine",
         "EXISTING_GROUPS": "Ein paar der Gruppen, die schon Pflanzen teilen",
         "LINKS": {
-            "FORUM": "unser Forum"
+            "FORUM": "Plantsharing-Forum"
         },
         "SECTIONS": {
             "GROUPS": {
@@ -723,11 +723,11 @@
             },
             "DEMOCRATIC": {
                 "TITLE": "Demokratische und teilhabende Entwicklung",
-                "DESCRIPTION": "Plantsharing nutzt karrot, welches eine freie und quelloffene Software ist, die mit den Rückmeldungen und der Partizipation ihrer Nutzer*innen entwickelt wird. Hauptsächlich wird sie von einem kleinen Kernteam entwickelt, welches sich in konstantem Austausch mit Menschen aus den unterschiedlichsten Gruppen befindet, um alle unvereinbaren und vereinbaren Bedürfnisse unter einen Hut zu bekommen und der Entwicklung eine Richtung zu geben. Wir befolgen eine Ethik der Integrität und der Nichtkommerzialisierung von Daten.",
-                "DESCRIPTION2": "Entwickler*innen und Designer*innen sind natürlich herzlich willkommen, schau' dir das Projekt an: {code}."
+                "DESCRIPTION": "Plantsharing nutzt karrot, eine freie und quelloffene Software, die mit den Rückmeldungen und unter der Teilhabe ihrer Nutzer*innen entwickelt wird. Hauptsächlich wird sie von einem kleinen Kernteam entwickelt, welches sich in konstantem Austausch mit Menschen aus den unterschiedlichsten Gruppen befindet, um alle unvereinbaren und vereinbaren Bedürfnisse unter einen Hut zu bekommen und der Entwicklung eine Richtung zu geben. Wir befolgen eine Ethik der Integrität und der Nichtkommerzialisierung von Daten.",
+                "DESCRIPTION2": "Entwickler*innen und Designer*innen sind natürlich herzlich willkommen, schau dir das Projekt an: {code}."
             },
             "COMMUNICATION": {
-                "DESCRIPTION": "Schreib' eine Nachricht, die alle in der Gruppe sehen werden, oder eine Privatnachricht an eine Einzelperson. Alles, was mit einer einzelnen Aktivität oder einem Ort in Zusammenhang steht, kann im jeweiligen Chat besprochen werden."
+                "DESCRIPTION": "Schreib eine Nachricht, die alle in der Gruppe sehen werden, oder eine Privatnachricht an eine Einzelperson. Alles, was mit einer einzelnen Aktivität oder einem Ort in Zusammenhang steht, kann im jeweiligen Chat besprochen werden."
             },
             "TRUST": {
                 "TITLE": "Demokratisches und vertrauensbasiertes Gruppenmanagement",
