@@ -28,8 +28,6 @@ def traverse_dict(base_content, head_content, keep, cond_func):
     # only keep the differences in head_file
     # print(head_content)
     for k,v in head_content.items():
-        if k not in base_content:
-            continue
         # everything is either a string or a dict
         if isinstance(v, str):
             # if this function is true, keep the head value v
@@ -45,6 +43,8 @@ def traverse_dict(base_content, head_content, keep, cond_func):
 def keep_diff(base_file, head_file, diff_file):
 
     def _diff_content_f(base_content, k, v):
+        if k not in base_content:
+            return False
         return base_content[k] != v
 
     print("Writing diff to {}".format(diff_file))
@@ -81,7 +81,8 @@ def merge_file(base_file, head_file, file_name):
     with open(head_file, 'r') as head_fh:
         head_content = json.load(head_fh)
     # merged_content = merge_content(base_content, head_content)
-    merged_content = traverse_dict(base_content, head_content, {}, _merge_overwrite_f)
+    # merge the already existing base_content with the new head_content
+    merged_content = traverse_dict(base_content, head_content, base_content, _merge_overwrite_f)
     with open(result_file, 'w') as result_fh:
         json.dump(merged_content, result_fh, indent=4)
     return True
@@ -97,9 +98,9 @@ def main():
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
         file_name = os.path.basename(base_file)
         diff_file = os.path.join(plantsharing_dir, "diff-" + file_name)
-        ## keep diff only needs to run initially. simply change the diff from then on.
-        # head_file = os.path.join(plantsharing_dir, file_name)
-        # keep_diff(base_file, head_file, diff_file)
+        # keep diff only needs to run initially. simply change the diff from then on.
+        head_file = os.path.join(plantsharing_dir, file_name)
+        keep_diff(base_file, head_file, diff_file)
         merge_file(base_file, diff_file, file_name)
 
 if __name__ == "__main__":
