@@ -51,13 +51,13 @@ def keep_diff(base_file, head_file, diff_file):
         return len(new_dict) > 0
 
     print("Writing diff to {}".format(diff_file))
-    with open(base_file, 'r') as base_fh:
+    with open(base_file, 'r', encoding='utf8') as base_fh:
         base_content = json.load(base_fh)
-    with open(head_file, 'r') as head_fh:
+    with open(head_file, 'r', encoding='utf8') as head_fh:
         head_content = json.load(head_fh)
     diffed_content = traverse_dict(base_content, head_content, {}, _branch_func, _diff_content_f)
-    with open(diff_file, 'w') as result_fh:
-        json.dump(diffed_content, result_fh, indent=4)
+    with open(diff_file, 'w', encoding='utf8') as result_fh:
+        json.dump(diffed_content, result_fh, indent=4, ensure_ascii=False)
     return True
 
 def merge_file(base_file, head_file, file_name):
@@ -76,14 +76,14 @@ def merge_file(base_file, head_file, file_name):
         print("Warning: {} does not exist, copying {}".format(head_file, base_file))
         head_file = base_file
     # open
-    with open(base_file, 'r') as base_fh:
+    with open(base_file, 'r', encoding='utf8') as base_fh:
         base_content = json.load(base_fh)
-    with open(head_file, 'r') as head_fh:
+    with open(head_file, 'r', encoding='utf8') as head_fh:
         head_content = json.load(head_fh)
     # merge the already existing base_content with the new head_content
     merged_content = traverse_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f)
-    with open(result_file, 'w') as result_fh:
-        json.dump(merged_content, result_fh, indent=4)
+    with open(result_file, 'w', encoding='utf8') as result_fh:
+        json.dump(merged_content, result_fh, indent=4, ensure_ascii=False)
     return True
 
 
