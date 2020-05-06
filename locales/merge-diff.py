@@ -99,9 +99,9 @@ def main():
         diff_file = os.path.join(plantsharing_dir, "diff-" + file_name)
         # TODO: add option to merge diff file over head_file?
         # keep diff needs to run initially, also it's a nice overview of your changes
-        head_file = os.path.join(plantsharing_dir, file_name)
+        # head_file = os.path.join(plantsharing_dir, file_name)
         # create the difference between the base file and the head file
-        keep_diff(base_file, head_file, diff_file)
+        # keep_diff(base_file, head_file, diff_file)
         # overwrite the base file with the diff
         merge_file(base_file, diff_file, file_name)
 
