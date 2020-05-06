@@ -60,13 +60,6 @@ def keep_diff(base_file, head_file, diff_file):
         json.dump(diffed_content, result_fh, indent=4)
     return True
 
-#def merge_content(base_content, head_content):
-#    # merge
-#    merged_content.update(base_content)
-#    merged_content.update(head_content)
-#    return merged_content
-
-
 def merge_file(base_file, head_file, file_name):
     print("Merging {}".format(base_file))
 
@@ -87,7 +80,6 @@ def merge_file(base_file, head_file, file_name):
         base_content = json.load(base_fh)
     with open(head_file, 'r') as head_fh:
         head_content = json.load(head_fh)
-    # merged_content = merge_content(base_content, head_content)
     # merge the already existing base_content with the new head_content
     merged_content = traverse_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f)
     with open(result_file, 'w') as result_fh:
@@ -105,9 +97,12 @@ def main():
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
         file_name = os.path.basename(base_file)
         diff_file = os.path.join(plantsharing_dir, "diff-" + file_name)
-        # keep diff only needs to run initially. simply change the diff from then on.
+        # TODO: add option to merge diff file over head_file?
+        # keep diff needs to run initially, also it's a nice overview of your changes
         head_file = os.path.join(plantsharing_dir, file_name)
+        # create the difference between the base file and the head file
         keep_diff(base_file, head_file, diff_file)
+        # overwrite the base file with the diff
         merge_file(base_file, diff_file, file_name)
 
 if __name__ == "__main__":

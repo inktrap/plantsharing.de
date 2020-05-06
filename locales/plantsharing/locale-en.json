@@ -699,11 +699,11 @@
   "ABOUT_KARROT": {
     "TITLE": "Let's share plants and keep a good thing growing!",
     "SUBTITLE1": "Plantsharing exists for people who want to share plants and everything related to it. It runs on karrot, which allows groups to form themselves, and to organise efficiently on a local and voluntary basis.",
-    "SUBTITLE2": "Feel free to share whole plants, seeds and seedlings, as well as everything related to the wellbeing of plants, such as potting-compost, fertilizer, or pots.",
+    "SUBTITLE2": "Feel free to share whole plants, seeds and seedlings, as well as everything related to the well-being of plants, such as potting-compost, fertilizer, or pots.",
     "VISION_INTRO": "Plantsharing wants you to connect and interact with others, it supports face-to-face activities with a layer of digital infrastructure.",
     "ACTION": "Have you already found a group nearby you? Or maybe you want to {startAGroup}? If you just want to try it out, then create an account and join the Playground group for testing.",
     "ACTION_START_A_GROUP": "start one",
-    "EXISTING_GROUPS": "A few groups already doing plantsharing",
+    "EXISTING_GROUPS": "A few groups that are already sharing plants",
     "AND_MORE": "And more...",
     "LINKS": {
       "FORUM": "community forum",
@@ -719,7 +719,7 @@
       },
       "ACTIVITIES": {
         "TITLE": "Distribution of tasks and activities",
-        "SUBTITLE": "Activities with a specific time and place, like plant pickups, can be entered in the software.",
+        "SUBTITLE": "Activities with a specific time and place, like plant pickups, can be entered.",
         "DESCRIPTION": "Each activity has a number of slots which members of the group can sign up for – this way everyone knows who goes where and when, and feedback can be given later."
       },
       "OFFERS": {

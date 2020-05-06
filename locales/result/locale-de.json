@@ -697,72 +697,70 @@
     "YOU": "Du",
     "TO": "bis",
     "ABOUT_KARROT": {
-        "TITLE": "Rette Dinge vor der Verschwendung und teile sie stattdessen!",
-        "SUBTITLE1": "Karrot existiert f\u00fcr Gruppen von Leuten, die Dinge vor dem Weggeschmissen-Werden retten und sie stattdessen teilen wollen, und erm\u00f6glicht es ihnen, sich in Gruppen effizient zu organisieren, auf einer lokalen und freiwilligen Basis.",
-        "SUBTITLE2": "Dinge wie Essen, Fahrr\u00e4der, Kleidung, oder was auch immer im Kontext einer Konsumgesellschaft exzessiv weg geworfen oder nicht genutzt wird.",
-        "VISION_INTRO": "Karrot ist ein Werkzeug f\u00fcr alle Arten von Graswurzelbewegungen um sich zu verbinden und zu wachsen, es unterst\u00fctzt die Koordination von Aktivit\u00e4ten von Angesicht zu Angesicht, mit einer Schicht digitaler Infrastruktur.",
-        "ACTION": "Hast du schon eine Gruppe in deiner N\u00e4he gefunden? Oder vielleicht magst du {startAGroup}? Wenn du Karrot ausprobieren willst, dann erstelle ein Benutzerprofil und tritt der Spielplatz-Gruppe zum Testen bei.",
-        "ACTION_START_A_GROUP": "starte eine",
-        "EXISTING_GROUPS": "Einige der Gruppen, die Karrot schon benutzen",
-        "AND_MORE": "Und mehr \u2026",
+        "TITLE": "Let's share plants and keep a good thing growing!",
+        "SUBTITLE1": "Plantsharing exists for people who want to share plants and everything related to it. It runs on karrot, which allows groups to form themselves, and to organise efficiently on a local and voluntary basis.",
+        "SUBTITLE2": "Feel free to share whole plants, seeds and seedlings, as well as everything related to the well-being of plants, such as potting-compost, fertilizer, or pots.",
+        "VISION_INTRO": "Plantsharing wants you to connect and interact with others, it supports face-to-face activities with a layer of digital infrastructure.",
+        "ACTION": "Have you already found a group nearby you? Or maybe you want to {startAGroup}? If you just want to try it out, then create an account and join the Playground group for testing.",
+        "ACTION_START_A_GROUP": "start one",
+        "EXISTING_GROUPS": "A few groups that are already sharing plants",
+        "AND_MORE": "And more...",
         "LINKS": {
-            "FORUM": "Gemeinschafts-Forum",
-            "CODE": "GitHub",
-            "CHAT": "Team-Chat",
-            "TRANSLATIONS": "Transifex"
+            "FORUM": "community forum",
+            "CHAT": "team chat"
         },
         "SECTIONS": {
             "GROUPS": {
-                "TITLE": "Unabh\u00e4ngige Gruppen",
-                "SUBTITLE": "Jede Gruppe auf Karrot ist komplett unabh\u00e4ngig und kann ihr eigenes Logo, sowie eigene Prozesse und Regeln haben.",
-                "DESCRIPTION": "Dennoch sind sie alle auf der Karte abgebildet, damit Leute sie finden und Kontakt zu anderen Gruppen in ihrer N\u00e4he, oder sogar weltweit, aufnehmen k\u00f6nnen."
+                "TITLE": "Independent groups",
+                "SUBTITLE": "Every plantsharing group is completely independent, and can have their own logo, processes and rules.",
+                "DESCRIPTION": "Yet they are all displayed on the map so that people can find and connect to other groups in their location and even globally."
             },
             "ACTIVITIES": {
-                "TITLE": "Verteilung von Aufgaben und Aktivit\u00e4ten",
-                "SUBTITLE": "Aktivit\u00e4ten mit spezifischer Zeit und Ort, wie etwa eine Essensabholung, k\u00f6nnen eingetragen werden.",
-                "DESCRIPTION": "Jede Aktivit\u00e4t hat eine Anzahl an Pl\u00e4tzen, f\u00fcr welche sich Mitglieder der Gruppe eintragen k\u00f6nnen - auf diese Art wei\u00df jedeR wer wohin geht und kann sp\u00e4ter eine R\u00fcckmeldung geben."
+                "TITLE": "Distribution of tasks and activities",
+                "SUBTITLE": "Activities with a specific time and place, like plant pickups, can be entered.",
+                "DESCRIPTION": "Each activity has a number of slots which members of the group can sign up for \u2013 this way everyone knows who goes where and when, and feedback can be given later."
             },
             "OFFERS": {
-                "TITLE": "Teile Dinge",
-                "SUBTITLE": "Erstelle eine anzeigen\u00e4hnliches Angebot von was auch immer du teilen oder abgeben willst.",
-                "DESCRIPTION": "Die Angebote sind f\u00fcr jeden in der Gruppe sichtbar und Leute k\u00f6nnen ihr Interesse am Angebot im Chat zeigen."
+                "TITLE": "Share things",
+                "SUBTITLE": "Create an ad-like offer of whatever you want to share or give away.",
+                "DESCRIPTION": "Offers are visible to everyone in the group and people can show their interest on the offer's chat."
             },
             "DEMOCRATIC": {
-                "TITLE": "Demokratische und partizipative Entwicklung",
-                "DESCRIPTION": "Karrot ist eine freie und quelloffene Software, die mit den R\u00fcckmeldungen und der Partizipation der Leute die sie benutzen, entwickelt wird. Haupts\u00e4chlich wird sie von einem kleinen Team entwickelt, welches sich konstant im Kontakt mit Leuten aus verschiedenen Gruppen befindet, um deren vereinbare und unvereinbare Bed\u00fcrfnisse unter einen Hut zu bringen und die Richtung der Entwicklung zu steuern. Wir halten uns an eine Ethik der Integrit\u00e4t und Nicht-Kommerzialisierung von Daten.",
-                "DESCRIPTION2": "Entwickler und designer sind offensichtlich willkomen an der Entwicklung Teil zu haben. Schau dir das Projekt auf {code} an."
+                "TITLE": "Democratic and participative development",
+                "DESCRIPTION": "Plantsharing runs on karrot, which is a free and open-source software developed with the feedback and participation of the people who use it. It is mainly developed by a small core team that is constantly in contact with people in different groups, in order to make sense of their diverging and converging needs and thus guide the development. We abide by the ethics of integrity and non-commercialization of data.",
+                "DESCRIPTION2": "Developers and designers are obviously welcome to participate in its development. Check out the project on {code}."
             },
             "COMMUNICATION": {
-                "TITLE": "Kommunikation im richtigen Kontext",
-                "DESCRIPTION": "Schreib eine Nachricht die alle in der Gruppe sehen k\u00f6nne, oder melde dich per privater Nachricht bei jemandem. Alles das sich auf eine Aktivit\u00e4t oder einen Ort bezieht kann in einem jeweiligen Chat besprochen werden."
+                "TITLE": "Communication in the right context",
+                "DESCRIPTION": "Write a message that everyone in the group will see or a private message to someone. Everything related to a single activity or place can be discussed in their respective chats."
             },
             "TRUST": {
-                "TITLE": "Demokratische und vertrauensbasierte Gruppenverwaltung.",
-                "DESCRIPTION": "In einer Karrot-Gruppe gibt es keine administrativen Supperecht. Leute welche genug Vertrauenskarroten von anderen erhalten haben, k\u00f6nnen die Gruppe und die Gruppeneinstellungen ver\u00e4ndern. Wenn neue Leute der Gruppe beitreten m\u00f6chten, dann m\u00fcssen sie sich bewerben und Fragen beantworten, die die Gruppe erstellt hat. JedeR mit Ver\u00e4nderungsrechten kann die Bewerbungen ablehnen oder zulassen. Genauso kann, im Falle eines Konflikts, die Gruppe ein Abstimmungsverfahren einleiten, um den Konflikt gemeinsam zu l\u00f6sen."
+                "TITLE": "Democratic and trust-based group management",
+                "DESCRIPTION": "There are no admin superpowers in a Karrot group. People who receive enough trust-carrots from their peers will be able to edit and change settings in the group. When new people want to join your group they need to apply and answer questions your group can set, which anyone with editing rights can decline or approve. Likewise, if there is a conflict, the group can enter a voting system to resolve it in a communal way."
             },
             "MAPS": {
-                "TITLE": "Karten und Listen",
-                "DESCRIPTION": "Du hast eine Karte auf der die Orte und Leute platziert sind, die Aktionen ausf\u00fchren. Es gibt auch eine sch\u00f6ne Liste bevorstehender Aktivit\u00e4ten, f\u00fcr die du dich online eintragen kannst. "
+                "TITLE": "Maps and lists",
+                "DESCRIPTION": "You have a map of where the places and the people doing the activities are located. You have a nice list of upcoming activities and can sign up for them online."
             },
             "TRANSPARENCY": {
-                "TITLE": "Transparenz",
-                "DESCRIPTION": "Die Historie zeigt, wer was wann getan hat. Alles von der Teilhabe an einer Aktion bis zu der Erstellung und Ver\u00e4nderung eines Ortes wird dort aufgezeichnet."
+                "TITLE": "Transparency",
+                "DESCRIPTION": "The history shows who did what and when. Everything from participating in an activity to creating and editing places is logged here."
             },
             "NOTIFICATIONS": {
-                "TITLE": "Benachrichtigungen",
-                "DESCRIPTION": "Du wirst \u00fcber nicht-belegte Aktivit\u00e4ten, neue Nachrichten, und neue potentielle Gruppenmitglieder, die deiner Gruppe beitreten wollen, benachrichtigt."
+                "TITLE": "Notifications",
+                "DESCRIPTION": "You get notified about empty activities, new messages and new people wanting to join your group. But you can also turn it all off if you wish more peace!"
             },
             "TRANSLATIONS": {
-                "TITLE": "Mehrsprachig",
-                "DESCRIPTION": "Karrot ist durch die Gemeinschaft komplett \u00fcbersetzbar  und schon in vielen Sprachen verf\u00fcgbar. Um zu \u00dcbersetzungen beizutragen besuche einfach unser Projekt auf {translations}."
+                "TITLE": "Multi-language",
+                "DESCRIPTION": "Karrot is fully translatable by the community and many languages are already added. To contribute more translations just visit the project on {translations}."
             },
             "OPENSOURCE": {
-                "TITLE": "Quelloffen",
-                "DESCRIPTION": "Alles ist Transparent und kann ver\u00e4ndert werden. Wir ermutigen Gruppen, ihre eigenen Instanzen der Plattform zu betreiben, wenn sie die M\u00f6glichkeit  dazu haben. Dennoch werden wir Zugang zu einer gehosteten Version auf karrot.world erm\u00f6glichen."
+                "TITLE": "Open source",
+                "DESCRIPTION": "Everything is transparent and possibly changeable. We encourage groups to host their own instances of the platform, if they have the ability to do so. Still, we also provide access to a hosted version on karrot.world."
             },
             "TEAM": {
-                "TITLE": "Reagierendes Team",
-                "DESCRIPTION": "Du kannst einfach mit den Leuten in sprechen, die Karrot entwickeln, entweder durch unser {forum}, auf {code}oder in Echteit durch auf {chat}(tritt #foodsaving-wordwide oder #karrot-dev bei, um die richtigen Leute direkt zu erreichen)."
+                "TITLE": "Responsive team",
+                "DESCRIPTION": "You can easily talk to the people developing karrot, either on our {forum}, on {code} or in real-time on our {chat} (join the channel #plantsharing or #karrot-dev to reach the right people immediately)."
             }
         }
     }

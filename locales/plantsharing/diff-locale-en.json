@@ -8,16 +8,16 @@
     "ABOUT_KARROT": {
         "TITLE": "Let's share plants and keep a good thing growing!",
         "SUBTITLE1": "Plantsharing exists for people who want to share plants and everything related to it. It runs on karrot, which allows groups to form themselves, and to organise efficiently on a local and voluntary basis.",
-        "SUBTITLE2": "Feel free to share whole plants, seeds and seedlings, as well as everything related to the wellbeing of plants, such as potting-compost, fertilizer, or pots.",
+        "SUBTITLE2": "Feel free to share whole plants, seeds and seedlings, as well as everything related to the well-being of plants, such as potting-compost, fertilizer, or pots.",
         "VISION_INTRO": "Plantsharing wants you to connect and interact with others, it supports face-to-face activities with a layer of digital infrastructure.",
         "ACTION": "Have you already found a group nearby you? Or maybe you want to {startAGroup}? If you just want to try it out, then create an account and join the Playground group for testing.",
-        "EXISTING_GROUPS": "A few groups already doing plantsharing",
+        "EXISTING_GROUPS": "A few groups that are already sharing plants",
         "SECTIONS": {
             "GROUPS": {
                 "SUBTITLE": "Every plantsharing group is completely independent, and can have their own logo, processes and rules."
             },
             "ACTIVITIES": {
-                "SUBTITLE": "Activities with a specific time and place, like plant pickups, can be entered in the software."
+                "SUBTITLE": "Activities with a specific time and place, like plant pickups, can be entered."
             },
             "DEMOCRATIC": {
                 "DESCRIPTION": "Plantsharing runs on karrot, which is a free and open-source software developed with the feedback and participation of the people who use it. It is mainly developed by a small core team that is constantly in contact with people in different groups, in order to make sense of their diverging and converging needs and thus guide the development. We abide by the ethics of integrity and non-commercialization of data."
