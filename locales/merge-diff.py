@@ -101,8 +101,10 @@ def main():
         # keep diff needs to run initially, also it's a nice overview of your changes
         # head_file = os.path.join(plantsharing_dir, file_name)
         # create the difference between the base file and the head file
+        # print("Creating diff from base_file and head_file")
         # keep_diff(base_file, head_file, diff_file)
         # overwrite the base file with the diff
+        print("Merging diff file into result (diff wins)")
         merge_file(base_file, diff_file, file_name)
 
 if __name__ == "__main__":
