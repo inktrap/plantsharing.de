@@ -704,15 +704,21 @@
         "ACTION": "Hast du schon eine Gruppe in deiner Nähe gefunden? Vielleicht möchtest du {startAGroup}? Falls du plantsharing nur mal ausprobieren möchtest, dann erstell ein Konto und tritt der Spielplatz-Gruppe zum Testen bei.",
         "ACTION_START_A_GROUP": "Gründe eine",
         "EXISTING_GROUPS": "Ein paar der Gruppen, die schon Pflanzen teilen",
+        "AND_MORE": "Und mehr …",
         "LINKS": {
-            "FORUM": "Plantsharing-Forum"
+            "FORUM": "Plantsharing-Forum",
+            "CODE": "GitHub",
+            "CHAT": "Team-Chat",
+            "TRANSLATIONS": "Transifex"
         },
         "SECTIONS": {
             "GROUPS": {
+                "TITLE": "Unabhängige Gruppen",
                 "SUBTITLE": "Jede Pflanzensharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben.",
                 "DESCRIPTION": "Dennoch werden alle Gruppen auf der Karte abgebildet, damit du sie finden und mit anderen Gruppen (lokal, aber auch weltweit) in Verbindung treten kannst."
             },
             "ACTIVITIES": {
+                "TITLE": "Verteilung von Aufgaben und Aktivitäten",
                 "SUBTITLE": "Aktivitäten (wie etwa eine Pflanzenabholung) können mit einer spezifischer Zeit und einem festen Ort angelegt werden.",
                 "DESCRIPTION": "Jede Aktivität hat eine Anzahl an Plätzen, welche Gruppenmitglieder belegen können. So erfahren alle, wer wann wo hin geht und können später eine Rückmeldung geben."
             },
@@ -727,6 +733,7 @@
                 "DESCRIPTION2": "Entwickler*innen und Designer*innen sind natürlich herzlich willkommen, schau dir das Projekt an: {code}."
             },
             "COMMUNICATION": {
+                "TITLE": "Kommunikation im richtigen Kontext",
                 "DESCRIPTION": "Schreib eine Nachricht, die alle in der Gruppe sehen werden, oder eine Privatnachricht an eine Einzelperson. Alles, was mit einer einzelnen Aktivität oder einem Ort in Zusammenhang steht, kann im jeweiligen Chat besprochen werden."
             },
             "TRUST": {
@@ -734,9 +741,11 @@
                 "DESCRIPTION": "In einer Karrot-Gruppe gibt's keine Admins mit Superkräften. Jedes Gruppenmitglied das genug Vertrauenskarroten von den anderen erhalten hat, kann die Gruppe und ihre Einstellungen verändern. Wenn neue Leute der Gruppe beitreten wollen, dann müssen sie sich bewerben und Fragen beantworten, welche die Gruppe festlegen kann. Bewerbungen können dann von den Gruppenmitgliedern angenommen und abgelehnt werden, die sie und ihre Einstellungen verändern können. Im Konfliktfall läuft es ähnlich: die Gruppe kann einen Abstimmungsprozess beginnen, um den Konflikt in einer gemeinschaftlichen Art und Weise zu lösen."
             },
             "MAPS": {
+                "TITLE": "Karten und Listen",
                 "DESCRIPTION": "Du sieht auf einer Karte, wo welcher Ort ist und welche Leute gerade welche Aktivitäten ausführen. Es gibt eine schöne Liste der bevorstehenden Aktivitäten, für die sich jeder online eintragen kann."
             },
             "TRANSPARENCY": {
+                "TITLE": "Transparenz",
                 "DESCRIPTION": "Die Historie zeigt, wer was wann gemacht hat. Alles, von der Teilnahme an einer Aktivität bis hin zur Erstellung und Veränderung von Orten wird gespeichert."
             },
             "NOTIFICATIONS": {
@@ -744,9 +753,11 @@
                 "DESCRIPTION": "Du wirst benachrichtigt, falls eine Aktivität nicht belegt ist, neue Nachrichten eintreffen, oder jemand deiner Gruppe beitreten möchte. Falls dir das auf die Nerven geht, kannst du auch jede dieser Benachrichtigungen ausschalten."
             },
             "TRANSLATIONS": {
+                "TITLE": "Mehrsprachig",
                 "DESCRIPTION": "Karrot ist durch unsere Gemeinschaft komplett übersetzbar und ist schon in vielen Sprachen verfügbar. Um zur Übersetzung beizutragen, besuche einfach das Projekt auf {translations}."
             },
             "OPENSOURCE": {
+                "TITLE": "Quelloffen",
                 "DESCRIPTION": "Alles ist transparent und kann verändert werden. Wir wollen Gruppen ermutigen, ihre eigenen Karrot-Instanzen aufzusetzen, wenn sie dazu die Möglichkeit haben. Dennoch werden wir gehostete Instanzen auf plantsharing.de und karrot.world anbieten."
             },
             "TEAM": {
