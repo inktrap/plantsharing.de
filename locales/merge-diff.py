@@ -24,7 +24,7 @@ def get_file(lang_code):
         shutil.copyfileobj(response, out_file)
     return True
 
-def traverse_dict(base_content, head_content, keep, branch_func, leaf_func):
+def traverse_dict(base_content, head_content, keep, branch_func, leaf_func, keep_content=True):
     # only keep the differences in head_file
     # print(head_content)
     for k,v in head_content.items():
@@ -34,7 +34,12 @@ def traverse_dict(base_content, head_content, keep, branch_func, leaf_func):
             if leaf_func(base_content, k, v):
                 keep[k] = v
         if isinstance(v, dict):
-            new_dict = traverse_dict(base_content[k], v, {}, branch_func, leaf_func)
+            if keep_content:
+                # include the subdictionary of base dictionary completely and only overwrite those that are in header_dict
+                new_dict = traverse_dict(base_content[k], v, base_content[k], branch_func, leaf_func, keep_content)
+            else:
+                # subdictionaries are empty and only the values of header_dict are added
+                new_dict = traverse_dict(base_content[k], v, {}, branch_func, leaf_func, keep_content)
             if branch_func(new_dict):
                 keep[k] = new_dict
     return keep
@@ -55,7 +60,7 @@ def keep_diff(base_file, head_file, diff_file):
         base_content = json.load(base_fh)
     with open(head_file, 'r', encoding='utf8') as head_fh:
         head_content = json.load(head_fh)
-    diffed_content = traverse_dict(base_content, head_content, {}, _branch_func, _diff_content_f)
+    diffed_content = traverse_dict(base_content, head_content, {}, _branch_func, _diff_content_f, False)
     with open(diff_file, 'w', encoding='utf8') as result_fh:
         json.dump(diffed_content, result_fh, indent=4, ensure_ascii=False)
     return True
@@ -81,7 +86,7 @@ def merge_file(base_file, head_file, file_name):
     with open(head_file, 'r', encoding='utf8') as head_fh:
         head_content = json.load(head_fh)
     # merge the already existing base_content with the new head_content
-    merged_content = traverse_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f)
+    merged_content = traverse_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f, True)
     with open(result_file, 'w', encoding='utf8') as result_fh:
         json.dump(merged_content, result_fh, indent=4, ensure_ascii=False)
     return True
