@@ -702,56 +702,66 @@
         "SUBTITLE2": "Tu dir keinen Zwang an und teile ganze Pflanzen, Saatgut und Setzlinge, ebenso wie alles, was mit dem Wohlbefinden von Pflanzen in Zusammenhang steht, wie etwa Blumenerde, Dünger, oder Blumentöpfe.",
         "VISION_INTRO": "Plantsharing will, dass du mit anderen in Verbindung trittst und interagierst, es fördert Aktivitäten von Angesicht zu Angesicht durch Karotts Schicht digitaler Infrastruktur.",
         "ACTION": "Hast du schon eine Gruppe in deiner Nähe gefunden? Vielleicht möchtest du {startAGroup}? Falls du plantsharing nur mal ausprobieren möchtest, dann erstell ein Konto und tritt der Spielplatz-Gruppe zum Testen bei.",
-        "ACTION_START_A_GROUP": "Gründe eine",
+        "ACTION_START_A_GROUP": "starte eine",
         "EXISTING_GROUPS": "Ein paar der Gruppen, die schon Pflanzen teilen",
         "AND_MORE": "Und mehr …",
         "LINKS": {
-            "FORUM": "Plantsharing-Forum"
+            "FORUM": "Gemeinschafts-Forum",
+            "CODE": "GitHub",
+            "CHAT": "Team-Chat",
+            "TRANSLATIONS": "Transifex"
         },
         "SECTIONS": {
             "GROUPS": {
+                "TITLE": "Unabhängige Gruppen",
                 "SUBTITLE": "Jede Pflanzensharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben.",
-                "DESCRIPTION": "Dennoch werden alle Gruppen auf der Karte abgebildet, damit du sie finden und mit anderen Gruppen (lokal, aber auch weltweit) in Verbindung treten kannst."
+                "DESCRIPTION": "Dennoch sind sie alle auf der Karte abgebildet, damit Leute sie finden und Kontakt zu anderen Gruppen in ihrer Nähe, oder sogar weltweit, aufnehmen können."
             },
             "ACTIVITIES": {
+                "TITLE": "Verteilung von Aufgaben und Aktivitäten",
                 "SUBTITLE": "Aktivitäten (wie etwa eine Pflanzenabholung) können mit einer spezifischer Zeit und einem festen Ort angelegt werden.",
-                "DESCRIPTION": "Jede Aktivität hat eine Anzahl an Plätzen, welche Gruppenmitglieder belegen können. So erfahren alle, wer wann wo hin geht und können später eine Rückmeldung geben."
+                "DESCRIPTION": "Jede Aktivität hat eine Anzahl an Plätzen, für welche sich Mitglieder der Gruppe eintragen können – auf diese Art wissen alle wer wohin geht und können später eine Rückmeldung geben."
             },
             "OFFERS": {
-                "TITLE": "Teile Pflanzen",
-                "SUBTITLE": "Erstelle ein anzeigenähnliches Angebote für das, was du teilen oder abgeben möchtest.",
-                "DESCRIPTION": "Angebote sind für alle in der Gruppe sichtbar und andere können ihr Interesse im Chat des Angebots bekunden."
+                "TITLE": "Teile Dinge",
+                "SUBTITLE": "Erstelle ein Angebot, wenn du etwas teilen oder abgeben willst.",
+                "DESCRIPTION": "Die Angebote sind für jeden in der Gruppe sichtbar und Leute können ihr Interesse am Angebot im Chat zeigen."
             },
             "DEMOCRATIC": {
-                "TITLE": "Demokratische und teilhabende Entwicklung",
+                "TITLE": "Demokratische und partizipative Entwicklung",
                 "DESCRIPTION": "Plantsharing nutzt karrot, eine freie und quelloffene Software, die mit den Rückmeldungen und unter der Teilhabe ihrer Nutzer*innen entwickelt wird. Hauptsächlich wird sie von einem kleinen Kernteam entwickelt, welches sich in konstantem Austausch mit Menschen aus den unterschiedlichsten Gruppen befindet, um alle unvereinbaren und vereinbaren Bedürfnisse unter einen Hut zu bekommen und der Entwicklung eine Richtung zu geben. Wir befolgen eine Ethik der Integrität und der Nichtkommerzialisierung von Daten.",
-                "DESCRIPTION2": "Entwickler*innen und Designer*innen sind natürlich herzlich willkommen, schau dir das Projekt an: {code}."
+                "DESCRIPTION2": "Entwickler und Designer sind willkommen bei der Weiterentwicklung mitzumachen. Schau dir das Projekt auf {code} an."
             },
             "COMMUNICATION": {
-                "DESCRIPTION": "Schreib eine Nachricht, die alle in der Gruppe sehen werden, oder eine Privatnachricht an eine Einzelperson. Alles, was mit einer einzelnen Aktivität oder einem Ort in Zusammenhang steht, kann im jeweiligen Chat besprochen werden."
+                "TITLE": "Kommunikation im richtigen Kontext",
+                "DESCRIPTION": "Schreib eine Nachricht die alle in der Gruppe sehen könne, oder melde dich per privater Nachricht bei jemandem. Alles das sich auf eine Aktivität oder einen Ort bezieht, kann in einem jeweiligen Chat besprochen werden."
             },
             "TRUST": {
-                "TITLE": "Demokratisches und vertrauensbasiertes Gruppenmanagement",
-                "DESCRIPTION": "In einer Karrot-Gruppe gibt's keine Admins mit Superkräften. Jedes Gruppenmitglied das genug Vertrauenskarroten von den anderen erhalten hat, kann die Gruppe und ihre Einstellungen verändern. Wenn neue Leute der Gruppe beitreten wollen, dann müssen sie sich bewerben und Fragen beantworten, welche die Gruppe festlegen kann. Bewerbungen können dann von den Gruppenmitgliedern angenommen und abgelehnt werden, die sie und ihre Einstellungen verändern können. Im Konfliktfall läuft es ähnlich: die Gruppe kann einen Abstimmungsprozess beginnen, um den Konflikt in einer gemeinschaftlichen Art und Weise zu lösen."
+                "TITLE": "Demokratische und vertrauensbasierte Gruppenverwaltung.",
+                "DESCRIPTION": "In einer Karrot-Gruppe gibt es keine Menschen mit Superkräften. Leute, welche genug Vertrauenskarotten von anderen erhalten haben, können die Gruppe und die Gruppeneinstellungen verändern. Wenn neue Leute der Gruppe beitreten möchten, dann müssen sie sich bewerben und Fragen beantworten, die die Gruppe erstellt hat. Alle mit Veränderungsrechten können Bewerbungen ablehnen oder zulassen. Im Falle eines Konfliktes kann die Gruppe ein Abstimmungsverfahren einleiten, um den Konflikt gemeinsam zu lösen."
             },
             "MAPS": {
-                "DESCRIPTION": "Du sieht auf einer Karte, wo welcher Ort ist und welche Leute gerade welche Aktivitäten ausführen. Es gibt eine schöne Liste der bevorstehenden Aktivitäten, für die sich jeder online eintragen kann."
+                "TITLE": "Karten und Listen",
+                "DESCRIPTION": "Es gibt eine Karte, auf der die Orte und Leute markiert sind, die an Aktivitäten teilnehmen. Es gibt auch eine schöne Liste bevorstehender Aktivitäten, für die du dich online eintragen kannst."
             },
             "TRANSPARENCY": {
-                "DESCRIPTION": "Die Historie zeigt, wer was wann gemacht hat. Alles, von der Teilnahme an einer Aktivität bis hin zur Erstellung und Veränderung von Orten wird gespeichert."
+                "TITLE": "Transparenz",
+                "DESCRIPTION": "Die Historie zeigt, wer was wann getan hat. Alles von der Teilnahme an einer Aktivität bis zu der Erstellung und Veränderung eines Ortes wird dort aufgezeichnet."
             },
             "NOTIFICATIONS": {
-                "TITLE": "Benachrichtungen",
-                "DESCRIPTION": "Du wirst benachrichtigt, falls eine Aktivität nicht belegt ist, neue Nachrichten eintreffen, oder jemand deiner Gruppe beitreten möchte. Falls dir das auf die Nerven geht, kannst du auch jede dieser Benachrichtigungen ausschalten."
+                "TITLE": "Benachrichtigungen",
+                "DESCRIPTION": "Du wirst über freie Aktivitäten, neue Nachrichten und Menschen, die deiner Gruppe beitreten wollen, benachrichtigt."
             },
             "TRANSLATIONS": {
-                "DESCRIPTION": "Karrot ist durch unsere Gemeinschaft komplett übersetzbar und ist schon in vielen Sprachen verfügbar. Um zur Übersetzung beizutragen, besuche einfach das Projekt auf {translations}."
+                "TITLE": "Mehrsprachig",
+                "DESCRIPTION": "Karrot ist von Nutzern komplett übersetzbar und schon in vielen Sprachen verfügbar. Um beim Übersetzen mitzuhelfen besuche einfach unser Projekt auf {translations}."
             },
             "OPENSOURCE": {
-                "DESCRIPTION": "Alles ist transparent und kann verändert werden. Wir wollen Gruppen ermutigen, ihre eigenen Karrot-Instanzen aufzusetzen, wenn sie dazu die Möglichkeit haben. Dennoch werden wir gehostete Instanzen auf plantsharing.de und karrot.world anbieten."
+                "TITLE": "Open source",
+                "DESCRIPTION": "Alles ist transparent und kann verändert werden. Wir ermutigen Gruppen, ihre eigenen Instanzen von Karrot zu betreiben, wenn sie die Möglichkeit dazu haben. Jedoch bieten wir auch eine direkt benutzbare Instanz auf karrot.world an."
             },
             "TEAM": {
-                "TITLE": "Empfängliches Team",
+                "TITLE": "Aktives Team",
                 "DESCRIPTION": "Du kannst ganz einfach mit den Leuten reden, die karrot entwickeln, entweder über unser {forum}, oder {code} oder in Echtzeit über unseren {chat} (tritt dem Channel #plantsharing oder #karrot-dev bei, um direkt die richtigen Ansprechpartner*innen zu finden)."
             }
         }

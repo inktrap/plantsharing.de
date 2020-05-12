@@ -106,7 +106,7 @@ def merge_dict(base_content, head_content, keep, branch_func, leaf_func):
             if leaf_func(base_content, k, v):
                 keep[k] = v
         if isinstance(v, dict):
-            new_dict = filter_dict(base_content[k], v, base_content[k], branch_func, leaf_func)
+            new_dict = merge_dict(base_content[k], v, base_content[k], branch_func, leaf_func)
             if branch_func(new_dict):
                 keep[k] = new_dict
     return keep
@@ -124,6 +124,10 @@ def rewrite_dict(this_dict, keep, branch_func, leaf_func):
     return keep
 
 
+# this is completely unnecessary, the english text is included in the locale if the content hasn't been translated
+# so if i am merging my diff over the original file, this is all already included
+# and if i am creating the diff they are NOT included because they are not … different, thus
+# i have incomplete weblate files (but that is alright, karrot should be translated first, right?)
 def make_suggestions(base_content, head_content, init_dict, keep):
     # traverse the keys in init_dict and check wether
     for k,v in init_dict.items():
@@ -148,8 +152,9 @@ def make_suggestions(base_content, head_content, init_dict, keep):
                 this_head_content = {}
             # if the dict doesn't exist in base nor head content, we won't go down that path
             # instead we'll simply use the initial dict to get a full tree
-            keep[k] = make_suggestions(this_base_content, this_head_content, v, keep)
+            keep[k] = make_suggestions(this_base_content, this_head_content, v, v)
     return keep
+
 
 def init_diff(base_file, head_file, diff_file, init_dict):
     print("Init diff in {}".format(_get_printname(diff_file)))
@@ -157,7 +162,6 @@ def init_diff(base_file, head_file, diff_file, init_dict):
         base_content = json.load(base_fh)
     with open(head_file, 'r', encoding='utf8') as head_fh:
         head_content = json.load(head_fh)
-    #print(init_dict)
     suggestions_content = make_suggestions(base_content, head_content, init_dict, {})
     with open(diff_file, 'w', encoding='utf8') as result_fh:
         json.dump(suggestions_content, result_fh, indent=4, ensure_ascii=False)
@@ -179,7 +183,7 @@ def keep_diff(base_file, head_file, diff_file):
         # only append non-empty dicts
         return len(new_dict) > 0
 
-    print(" - writing diff to {}".format(_get_printname(diff_file)))
+    print("Writing diff to {}".format(_get_printname(diff_file)))
     with open(base_file, 'r', encoding='utf8') as base_fh:
         base_content = json.load(base_fh)
     with open(head_file, 'r', encoding='utf8') as head_fh:
@@ -195,7 +199,7 @@ def _get_printname(filename):
 
 
 def merge_file(base_file, head_file, result_file):
-    print(" - merging {} over {}".format(_get_printname(head_file), _get_printname(base_file)))
+    print("Merging {} over {}".format(_get_printname(head_file), _get_printname(base_file)))
 
     def _merge_overwrite_f(base_content, k, v):
         return True
@@ -268,7 +272,6 @@ def main():
     if args.init_diff:
         print("Initing diffs (based on weblate/locale-en.json)")
         master_dict = os.path.join(weblate_dir, 'locale-en.json')
-        # remove all leafs from init_dict
 
         def _keep_dict(this_dict):
             return this_dict
@@ -280,37 +283,24 @@ def main():
             init_content = json.load(init_fh)
 
         init_dict = rewrite_dict(init_content, {}, _keep_dict, _empty_leaf)
-        #print(init_dict)
-        #raise NotImplementedError
 
         for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            # print(" - base file {}".format(base_file))
             file_name = os.path.basename(base_file)
             diff_file = os.path.join(weblate_dir, file_name)
             head_file = os.path.join(weblate_dir, file_name)
-            # TODO: should i use head_file or diff_file here for head_file???
-            # … probably diff_file, because it contains the latest translations, … ?
-
-            # TODO: english overwrites if the key is not in head file nor in diff file
             init_diff(base_file, head_file, diff_file, init_dict)
-        raise NotImplementedError
 
     if args.edit_diff:
         print("Re-creating diffs")
         for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            # print(" - base file {}".format(base_file))
             file_name = os.path.basename(base_file)
             diff_file = os.path.join(weblate_dir, file_name)
-            # TODO: add option to merge diff file over head_file?
-            # keep diff needs to run initially, also it's a nice overview of your changes
             head_file = os.path.join(project_dir, file_name)
-            # create the difference between the base file and the head file
             keep_diff(base_file, head_file, diff_file)
 
     if args.merge_diff:
         print("Merging diff files into project dir (diff wins)")
     for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-        # print(" - base file {}".format(base_file))
         file_name = os.path.basename(base_file)
         diff_file = os.path.join(weblate_dir, file_name)
         result_file = os.path.join(project_dir, file_name)
