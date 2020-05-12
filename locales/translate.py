@@ -136,8 +136,9 @@ def make_suggestions(base_content, head_content, init_dict, keep):
                 # a value exists in head_file (the diff), if yes, take it
                 keep[k] = head_content[k]
             elif k in base_content:
-                # if not, check wether one exists in base_content (karrot's file)
+                # if not, check wether one exists in plantsharing's english file
                 keep[k] = base_content[k]
+                # if not, check wether one exists in karrot's file, however, then the texts are different …
             else:
                 # just keep the existing value from init_dict
                 keep[k] = v
@@ -310,4 +311,16 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# problem (because i want to have the best of both worlds):
+
+# if i am using karrot as a fallback, as suggestions, then those texts are included in the results
+# if karrot doesn't have a translation for e.g. danish, karrot's english version is used
+# that means karrot's values for english show up in MY translations under danish
+
+# so i have to
+# replace them with my english value if they are equal to karrot's english value (when? edit diff or init diff or both?)
+# and i have to replace them with my english value before i am making the results if they are equal to karrot's locale version
+# (the french translation has not been adapted yet, so let's use my english version, but give translators karrot's version)
+
 
