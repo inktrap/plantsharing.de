@@ -1,4 +1,10 @@
 {
+    "GLOBAL": {
+        "ABOUT_KARROT": "Über Plantsharing"
+    },
+    "COMMUNITY_FEED": {
+        "KARROT_DISCUSSION": "Diskussionen über Karrot"
+    },
     "ABOUT_KARROT": {
         "TITLE": "Teile Pflanzen und lass was gutes wachsen",
         "SUBTITLE1": "Plantsharing existiert für Leute, die Pflanzen, und alles was damit verbunden ist, teilen wollen. Das läuft über karrot, welches Gruppen erlaubt, sich selbst zu bilden und effizient auf lokaler, freiwilliger Grundlage zu organisieren.",
@@ -8,7 +14,7 @@
         "EXISTING_GROUPS": "Ein paar der Gruppen, die schon Pflanzen teilen",
         "SECTIONS": {
             "GROUPS": {
-                "SUBTITLE": "Jede Pflanzensharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben."
+                "SUBTITLE": "Jede Plantsharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben."
             },
             "ACTIVITIES": {
                 "SUBTITLE": "Aktivitäten (wie etwa eine Pflanzenabholung) können mit einer spezifischer Zeit und einem festen Ort angelegt werden."

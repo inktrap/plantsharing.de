@@ -8,7 +8,7 @@
         "GENERIC_ERROR": "Entschuldige, ein Fehler ist aufgetreten",
         "SEARCH_RESULTS": "Suchergebnisse",
         "SEARCH_NOT_FOUND": "Nicht gefunden",
-        "ABOUT_KARROT": "Über Karrot"
+        "ABOUT_KARROT": "Über Plantsharing"
     },
     "USERDATA": {
         "EMAIL": "E-Mail",
@@ -714,7 +714,7 @@
         "SECTIONS": {
             "GROUPS": {
                 "TITLE": "Unabhängige Gruppen",
-                "SUBTITLE": "Jede Pflanzensharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben.",
+                "SUBTITLE": "Jede Plantsharing-Gruppe ist vollständig unabhängig und kann ihr eigenes Logo, sowie ihre eigenen Prozesse und Regeln haben.",
                 "DESCRIPTION": "Dennoch sind sie alle auf der Karte abgebildet, damit Leute sie finden und Kontakt zu anderen Gruppen in ihrer Nähe, oder sogar weltweit, aufnehmen können."
             },
             "ACTIVITIES": {

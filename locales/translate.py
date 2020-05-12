@@ -136,10 +136,10 @@ def make_suggestions(base_content, head_content, init_dict, keep):
                 # a value exists in head_file (the diff), if yes, take it
                 keep[k] = head_content[k]
             elif k in base_content:
-                # if not, check wether one exists in base_content
+                # if not, check wether one exists in base_content (karrot's file)
                 keep[k] = base_content[k]
             else:
-                # just keep the existing value from init_dict (empty string)
+                # just keep the existing value from init_dict
                 keep[k] = v
         if isinstance(v, dict):
             if k in base_content:
@@ -276,13 +276,14 @@ def main():
         def _keep_dict(this_dict):
             return this_dict
 
-        def _empty_leaf(base_content, k, v):
-            return ""
+        def _leaf_func(this_dict, k, v):
+            # do not return the empty string, use english as the default
+            # return ""
+            # this is the same as v:
+            return this_dict[k]
 
         with open(master_dict, 'r', encoding='utf8') as init_fh:
-            init_content = json.load(init_fh)
-
-        init_dict = rewrite_dict(init_content, {}, _keep_dict, _empty_leaf)
+            init_dict = json.load(init_fh)
 
         for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
             file_name = os.path.basename(base_file)
@@ -300,11 +301,11 @@ def main():
 
     if args.merge_diff:
         print("Merging diff files into project dir (diff wins)")
-    for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-        file_name = os.path.basename(base_file)
-        diff_file = os.path.join(weblate_dir, file_name)
-        result_file = os.path.join(project_dir, file_name)
-        merge_file(base_file, diff_file, result_file)
+        for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
+            file_name = os.path.basename(base_file)
+            diff_file = os.path.join(weblate_dir, file_name)
+            result_file = os.path.join(project_dir, file_name)
+            merge_file(base_file, diff_file, result_file)
 
 
 if __name__ == "__main__":
