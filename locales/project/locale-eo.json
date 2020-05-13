@@ -697,13 +697,13 @@
     "YOU": "Vi",
     "TO": "al",
     "ABOUT_KARROT": {
-        "TITLE": "Save things from being wasted, share them instead!",
-        "SUBTITLE1": "Karrot exists for groups of people who want to save things from being wasted and share them instead, allowing these groups to organise efficiently, on a local and voluntary basis.",
-        "SUBTITLE2": "Things such as food, bikes, clothes or whatever is being excessively thrown away or unused in the context of a consumerist society.",
-        "VISION_INTRO": "Karrot is a tool for all kinds of grassroots initiatives to connect and grow, supporting the co-ordination of face-to-face activities with a layer of digital infrastructure.",
-        "ACTION": "Have you already found a group nearby you? Or maybe you want to {startAGroup}? If you just want to try Karrot out, then create an account and join the Playground group for testing.",
+        "TITLE": "Empêche le gaspillage, encourage le partage !",
+        "SUBTITLE1": "Karrot existe pour les groupes et associations qui veulent partager plutôt que gaspiller, en permettant à ces groupes de s'organiser de manière efficace, locale et bénévole.",
+        "SUBTITLE2": "Sauver des choses comme de la nourriture, des vélos, des vêtements, ou quoi que ce soit qui soit gaspillé et gâché dans la société de consommation.",
+        "VISION_INTRO": "Dans le but de soutenir la mise en relation et le développement de toutes sortes d'initiatives citoyennes, Karrot fournit un outil digital élaboré pour coordoner des activités de partage en face-à-face.",
+        "ACTION": "Hast du schon eine Gruppe in deiner Nähe gefunden? Vielleicht möchtest du {startAGroup}? Falls du plantsharing nur mal ausprobieren möchtest, dann erstell ein Konto und tritt der Spielplatz-Gruppe zum Testen bei.",
         "ACTION_START_A_GROUP": "start one",
-        "EXISTING_GROUPS": "A few groups already using Karrot",
+        "EXISTING_GROUPS": "Quelques groupes qui utilisent déjà Karrot",
         "AND_MORE": "And more...",
         "LINKS": {
             "FORUM": "community forum",
@@ -714,12 +714,12 @@
         "SECTIONS": {
             "GROUPS": {
                 "TITLE": "Independent groups",
-                "SUBTITLE": "Every group on karrot is completely independent and can have their own logo, processes and rules.",
+                "SUBTITLE": "Chaque groupe sur karrot est entièrement indépendant et peut avoir son propre logo, ses propres règles et modes de fonctionnement.",
                 "DESCRIPTION": "Yet they are all displayed on the map so that people can find and connect to other groups in their location and even globally."
             },
             "ACTIVITIES": {
                 "TITLE": "Distribution of tasks and activities",
-                "SUBTITLE": "Activities with a specific time and place, like food pickups in the case of foodsaving, can be entered in the software.",
+                "SUBTITLE": "Une activité avec une heure et un lieu déterminés, comme par exemple une récolte d'invendus alimentaires, peut être inscrite dans le programme.",
                 "DESCRIPTION": "Each activity has a number of slots which members of the group can sign up for – this way everyone knows who goes where and when, and feedback can be given later."
             },
             "OFFERS": {
@@ -729,7 +729,7 @@
             },
             "DEMOCRATIC": {
                 "TITLE": "Democratic and participative development",
-                "DESCRIPTION": "Karrot is a free and open-source software developed with the feedback and participation of the people who use it. It is mainly developed by a small core team that is constantly in contact with people in different groups, in order to make sense of their diverging and converging needs and thus guide the development. We abide by the ethics of integrity and non-commercialization of data.",
+                "DESCRIPTION": "Karrot est un software libre d'accès et open-source, développé avec la participation de ses utilisateurs. Derrière le code se trouve une petite équipe internationale, en contact permanant avec les groupes pour comprendre leurs différents besoins de fonctionnalités et ainsi guider le développement. Nous sommes guidés par un désir d'intégrité et ne tolérons pas la commercialisation des données.",
                 "DESCRIPTION2": "Developers and designers are obviously welcome to participate in its development. Check out the project on {code}."
             },
             "COMMUNICATION": {
@@ -762,7 +762,7 @@
             },
             "TEAM": {
                 "TITLE": "Responsive team",
-                "DESCRIPTION": "You can easily talk to the people developing Karrot, either on our {forum}, on {code} or in real-time on our {chat}."
+                "DESCRIPTION": "Il est facile de contacter l'équipe qui code Karrot, soit sur notre {forum}, sur {code} ou bien sur le {chat}. Attention, l'équipe est anglophone !"
             }
         }
     }

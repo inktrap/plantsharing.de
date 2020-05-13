@@ -146,32 +146,36 @@ def merge_dict(base_content, head_content, keep, weblate_en, karrot_en, branch_f
     return keep
 
 
-def make_suggestions(base_content, head_content, weblate_en, karrot_en, keep):
+def make_suggestions(karrot_content, weblate_content, weblate_en, karrot_en, keep):
     # traverse the keys in weblate_en and check wether
     for k,v in weblate_en.items():
         if isinstance(v, str):
-            if k in head_content:
+            if k in weblate_content:
                 # a value exists in head_file (the diff), if yes, take it
-                keep[k] = head_content[k]
-            elif k in base_content and base_content[k] != karrot_en[k]:
+                keep[k] = weblate_content[k]
+            elif k in karrot_content and karrot_content[k] != karrot_en[k]:
                 # if not, check if one exists in karrot's file that is different to karrot's english default
                 # this will give us the french suggestion if it exists, but will use the project's locale if not
-                keep[k] = base_content[k]
+                keep[k] = karrot_content[k]
             else:
                 # just keep the existing value from weblate_en
                 keep[k] = v
         if isinstance(v, dict):
-            if k in base_content:
-                this_base_content = base_content[k]
+            if k in karrot_content:
+                this_karrot_content = karrot_content[k]
             else:
-                this_base_content = {}
-            if k in head_content:
-                this_head_content = head_content[k]
+                this_karrot_content = {}
+            if k in weblate_content:
+                this_weblate_content = weblate_content[k]
             else:
-                this_head_content = {}
+                this_weblate_content = {}
+            if k in weblate_en:
+                this_weblate_en = weblate_en[k]
+            else:
+                this_weblate_en = {}
             # if the dict doesn't exist in base nor head content, we won't go down that path
             # instead we'll simply use the initial dict to get a full tree
-            keep[k] = make_suggestions(this_base_content, this_head_content, v, karrot_en[k], v)
+            keep[k] = make_suggestions(this_karrot_content, this_weblate_content, this_weblate_en, karrot_en[k], v)
     return keep
 
 
