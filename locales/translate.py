@@ -18,15 +18,6 @@ parser.add_argument(
 )
 
 parser.add_argument(
-    "-e",
-    "--edit-diff",
-    action="store_true",
-    default=False,
-    dest="edit_diff",
-    help="get diff from project and karrot and (re-)create weblate files",
-)
-
-parser.add_argument(
     "-m",
     "--merge-diff",
     action="store_true",
@@ -57,18 +48,23 @@ parser.add_argument(
 args = parser.parse_args()
 
 script_dir = os.path.dirname(os.path.realpath(__file__))
-karrot_dir = os.path.join(script_dir, 'karrot')
-weblate_dir = os.path.join(script_dir, 'weblate')
-project_dir = os.path.join(script_dir, 'plantsharing')
+karrot_dir = os.path.join(script_dir, 'upstream')
+weblate_dir = os.path.join(script_dir, 'translate')
+project_dir = os.path.join(script_dir, 'project')
 
-assert os.path.isdir(karrot_dir), "Please create {}".format(karrot_dir)
-assert os.path.isdir(project_dir), "Please create {}".format(project_dir)
-assert os.path.isdir(weblate_dir), "Please create {}".format(weblate_dir)
+for this_dir in [karrot_dir, weblate_dir, project_dir]:
+    if not os.path.isdir(this_dir):
+        os.mkdir(this_dir)
+    assert os.path.isdir(this_dir), "Please create {}".format(this_dir)
+
+def _p(filename):
+    # create a printable version of a filepath+name
+    return os.path.relpath(filename, script_dir)
 
 
 def get_file(lang_code, this_url, out_dir):
     file_name = "locale-{}.json".format(lang_code)
-    print("Updating {}".format(_get_printname(file_name)))
+    print("Updating {}".format(_p(file_name)))
     this_url = this_url.format(file_name)
     result_file = os.path.join(out_dir, file_name)
 
@@ -98,49 +94,38 @@ def filter_dict(base_content, head_content, keep, branch_func, leaf_func, keep_c
     return keep
 
 
-def merge_dict(base_content, head_content, keep, branch_func, leaf_func):
+def merge_dict(base_content, head_content, keep, weblate_en, karrot_en, branch_func, leaf_func):
     for k,v in head_content.items():
-        # everything is either a string or a dict
         if isinstance(v, str):
-            # if this function is true, keep the head value v
-            if leaf_func(base_content, k, v):
-                keep[k] = v
+            keep[k] = leaf_func(base_content, head_content, k, v, weblate_en, karrot_en)
         if isinstance(v, dict):
-            new_dict = merge_dict(base_content[k], v, base_content[k], branch_func, leaf_func)
-            if branch_func(new_dict):
-                keep[k] = new_dict
-    return keep
-
-def rewrite_dict(this_dict, keep, branch_func, leaf_func):
-    for k,v in this_dict.items():
-        # everything is either a string or a dict
-        if isinstance(v, str):
-            # rewrite the leaf based on leaf_func
-            keep[k] = leaf_func(this_dict, k, v)
-        if isinstance(v, dict):
-            # rewrite the branch based on branch_func
-            # and recurse
-            keep[k] = rewrite_dict(branch_func(v), v, branch_func, leaf_func)
+            if k in weblate_en:
+                this_weblate_content = weblate_en[k]
+            else:
+                this_weblate_content = {}
+            if k in karrot_en:
+                this_karrot_content = karrot_en[k]
+            else:
+                this_karrot_content = {}
+            new_dict = merge_dict(base_content[k], v, base_content[k], this_weblate_content, this_karrot_content, branch_func, leaf_func)
+            # i am replacing values, I'll strip out empty dicts later on
+            keep[k] = branch_func(new_dict)
     return keep
 
 
-# this is completely unnecessary, the english text is included in the locale if the content hasn't been translated
-# so if i am merging my diff over the original file, this is all already included
-# and if i am creating the diff they are NOT included because they are not … different, thus
-# i have incomplete weblate files (but that is alright, karrot should be translated first, right?)
-def make_suggestions(base_content, head_content, init_dict, keep):
-    # traverse the keys in init_dict and check wether
-    for k,v in init_dict.items():
+def make_suggestions(base_content, head_content, weblate_en, karrot_en, keep):
+    # traverse the keys in weblate_en and check wether
+    for k,v in weblate_en.items():
         if isinstance(v, str):
             if k in head_content:
                 # a value exists in head_file (the diff), if yes, take it
                 keep[k] = head_content[k]
-            elif k in base_content:
-                # if not, check wether one exists in plantsharing's english file
+            elif k in base_content and base_content[k] != karrot_en[k]:
+                # if not, check if one exists in karrot's file that is different to karrot's english default
+                # this will give us the french suggestion if it exists, but will use the project's locale if not
                 keep[k] = base_content[k]
-                # if not, check wether one exists in karrot's file, however, then the texts are different …
             else:
-                # just keep the existing value from init_dict
+                # just keep the existing value from weblate_en
                 keep[k] = v
         if isinstance(v, dict):
             if k in base_content:
@@ -153,27 +138,28 @@ def make_suggestions(base_content, head_content, init_dict, keep):
                 this_head_content = {}
             # if the dict doesn't exist in base nor head content, we won't go down that path
             # instead we'll simply use the initial dict to get a full tree
-            keep[k] = make_suggestions(this_base_content, this_head_content, v, v)
+            keep[k] = make_suggestions(this_base_content, this_head_content, v, karrot_en[k], v)
     return keep
 
 
-def init_diff(base_file, head_file, diff_file, init_dict):
-    print("Init diff in {}".format(_get_printname(diff_file)))
-    with open(base_file, 'r', encoding='utf8') as base_fh:
-        base_content = json.load(base_fh)
-    with open(head_file, 'r', encoding='utf8') as head_fh:
-        head_content = json.load(head_fh)
-    suggestions_content = make_suggestions(base_content, head_content, init_dict, {})
+def init_diff(karrot_file, weblate_file, diff_file, weblate_en, karrot_en):
+    print("Init diff in {}".format(_p(diff_file)))
+    with open(karrot_file, 'r', encoding='utf8') as karrot_fh:
+        karrot_content = json.load(karrot_fh)
+    # if the diff doesn't exist yet, we are copying karrot's to make suggestions
+    if not os.path.isfile(weblate_file):
+        shutil.copyfile(karrot_file, weblate_file)
+    with open(weblate_file, 'r', encoding='utf8') as weblate_fh:
+        weblate_content = json.load(weblate_fh)
+    suggestions_content = make_suggestions(karrot_content, weblate_content, weblate_en, karrot_en, {})
     with open(diff_file, 'w', encoding='utf8') as result_fh:
         json.dump(suggestions_content, result_fh, indent=4, ensure_ascii=False)
-    #print(suggestions)
-    # remove empty keys?
-    # TODO: remove reading files from functions
     return True
 
 
 def keep_diff(base_file, head_file, diff_file):
     # create the difference between the head file and the base file and write it to diff file
+    # this is useful if karrot updated it's translations
 
     def _diff_content_f(base_content, k, v):
         if k not in base_content:
@@ -184,7 +170,7 @@ def keep_diff(base_file, head_file, diff_file):
         # only append non-empty dicts
         return len(new_dict) > 0
 
-    print("Writing diff to {}".format(_get_printname(diff_file)))
+    print("Writing diff to {}".format(_p(diff_file)))
     with open(base_file, 'r', encoding='utf8') as base_fh:
         base_content = json.load(base_fh)
     with open(head_file, 'r', encoding='utf8') as head_fh:
@@ -195,37 +181,50 @@ def keep_diff(base_file, head_file, diff_file):
     return True
 
 
-def _get_printname(filename):
-    return os.path.relpath(filename, script_dir)
+def merge_file(karrot_file, weblate_file, result_file, weblate_en, karrot_en):
+    print("Merging {} over {}".format(_p(weblate_file), _p(karrot_file)))
 
-
-def merge_file(base_file, head_file, result_file):
-    print("Merging {} over {}".format(_get_printname(head_file), _get_printname(base_file)))
-
-    def _merge_overwrite_f(base_content, k, v):
-        return True
+    def _merge_overwrite_f(karrot_file, weblate_file, k_weblate, v_weblate, weblate_en, karrot_en):
+        # the text is equal to karrot's default english value
+        if v_weblate == karrot_en[k_weblate]:
+            # if there is an edited value for that key, return that value
+            if k_weblate in weblate_en:
+                return weblate_en[k_weblate]
+            # if there is no edited value, return karrot's value
+            else:
+                return v_weblate
+        # the value is equal to karrot's value but it is not english
+        # (e.g. someone translated karrot's value to french, but not ours)
+        elif v_weblate == karrot_file[k_weblate]:
+            # this is always the case
+            if v_weblate in weblate_en:
+                # return our english default value
+                return weblate_en[k_weblate]
+            else:
+                # return karrot's translation
+                return karrot_file[k_weblate]
+        # simply return the value if it just works
+        return v_weblate
 
     def _branch_func(new_dict):
         # overwrite everything that is defined
-        return True
+        return new_dict
 
     # requirements
-    if not os.path.isfile(head_file):
-        print("Warning: {} does not exist, copying {}".format(_get_printname(head_file), _get_printname(base_file)))
-        head_file = base_file
+    if not os.path.isfile(weblate_file):
+        print("Warning: {} does not exist, copying {}".format(_p(weblate_file), _p(karrot_file)))
+        weblate_file = karrot_file
     # open
-    with open(base_file, 'r', encoding='utf8') as base_fh:
-        base_content = json.load(base_fh)
-    with open(head_file, 'r', encoding='utf8') as head_fh:
-        head_content = json.load(head_fh)
+    with open(karrot_file, 'r', encoding='utf8') as karrot_fh:
+        karrot_content = json.load(karrot_fh)
+    with open(weblate_file, 'r', encoding='utf8') as weblate_fh:
+        weblate_content = json.load(weblate_fh)
     # merge the already existing base_content with the new head_content
-    merged_content = merge_dict(base_content, head_content, base_content, _branch_func, _merge_overwrite_f)
+    merged_content = merge_dict(karrot_content, weblate_content, karrot_content, weblate_en, karrot_en, _branch_func, _merge_overwrite_f)
     with open(result_file, 'w', encoding='utf8') as result_fh:
         json.dump(merged_content, result_fh, indent=4, ensure_ascii=False)
     return True
 
-
-UPDATE_LANG_CODES = ['de', 'en']
 
 LANG_CODES = [
     "ar",
@@ -271,56 +270,58 @@ def main():
         raise NotImplementedError
 
     if args.init_diff:
-        print("Initing diffs (based on weblate/locale-en.json)")
-        master_dict = os.path.join(weblate_dir, 'locale-en.json')
 
-        def _keep_dict(this_dict):
-            return this_dict
+        print("Running init …")
 
-        def _leaf_func(this_dict, k, v):
-            # do not return the empty string, use english as the default
-            # return ""
-            # this is the same as v:
-            return this_dict[k]
+        karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
 
-        with open(master_dict, 'r', encoding='utf8') as init_fh:
-            init_dict = json.load(init_fh)
+        if not os.path.isfile(karrot_filename):
+            print("Please pull new karrot locales with -k/--update-karrot")
+            return True
+
+        weblate_init_filename = os.path.join(weblate_dir, 'karrot-en.json')
+        diff_filename = os.path.join(weblate_dir, 'locale-en.json')
+        if not (os.path.isfile(weblate_init_filename) and os.path.isfile(diff_filename)):
+            print("Copying {} to {}".format(_p(karrot_filename), _p(weblate_init_filename)))
+            shutil.copyfile(karrot_filename, weblate_init_filename)
+            print("Edit {} now and re-run init to generate the first diff".format(_p(weblate_init_filename)))
+            return True
+
+        if not os.path.isfile(diff_filename):
+            print("Creating diff of {} and {}".format(_p(weblate_init_filename), _p(karrot_filename)))
+            keep_diff(karrot_filename, weblate_init_filename, diff_filename)
+            print("You might want to check {} now and re-run init".format(_p(diff_filename)))
+            return True
+
+        print("Initing diffs based on keys in {} and content locales in {}".format(_p(diff_filename), karrot_dir))
+
+        with open(diff_filename, 'r', encoding='utf8') as weblate_fh:
+            weblate_en = json.load(weblate_fh)
+        with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
+            karrot_en = json.load(karrot_fh)
 
         for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
             file_name = os.path.basename(base_file)
             diff_file = os.path.join(weblate_dir, file_name)
             head_file = os.path.join(weblate_dir, file_name)
-            init_diff(base_file, head_file, diff_file, init_dict)
-
-    if args.edit_diff:
-        print("Re-creating diffs")
-        for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            file_name = os.path.basename(base_file)
-            diff_file = os.path.join(weblate_dir, file_name)
-            head_file = os.path.join(project_dir, file_name)
-            keep_diff(base_file, head_file, diff_file)
+            init_diff(base_file, head_file, diff_file, weblate_en, karrot_en)
+        print("You can upload the diff files to your translation interface now.")
 
     if args.merge_diff:
-        print("Merging diff files into project dir (diff wins)")
-        for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            file_name = os.path.basename(base_file)
-            diff_file = os.path.join(weblate_dir, file_name)
+        print("Merging locales cleverly from {} and {} into {}".format(_p(karrot_dir), _p(weblate_dir), _p(project_dir)))
+        karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
+        with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
+            karrot_en = json.load(karrot_fh)
+        weblate_file = os.path.join(weblate_dir, 'locale-en.json')
+        with open(weblate_file, 'r', encoding='utf8') as weblate_fh:
+            weblate_en = json.load(weblate_fh)
+        for karrot_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
+            file_name = os.path.basename(karrot_file)
+            weblate_file = os.path.join(weblate_dir, file_name)
             result_file = os.path.join(project_dir, file_name)
-            merge_file(base_file, diff_file, result_file)
+            merge_file(karrot_file, weblate_file, result_file, weblate_en, karrot_en)
 
 
 if __name__ == "__main__":
     main()
-
-# problem (because i want to have the best of both worlds):
-
-# if i am using karrot as a fallback, as suggestions, then those texts are included in the results
-# if karrot doesn't have a translation for e.g. danish, karrot's english version is used
-# that means karrot's values for english show up in MY translations under danish
-
-# so i have to
-# replace them with my english value if they are equal to karrot's english value (when? edit diff or init diff or both?)
-# and i have to replace them with my english value before i am making the results if they are equal to karrot's locale version
-# (the french translation has not been adapted yet, so let's use my english version, but give translators karrot's version)
-
 
