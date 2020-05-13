@@ -14,7 +14,7 @@ parser.add_argument(
     action="store_true",
     default=False,
     dest="init_diff",
-    help="init diff from weblate/locale-en.json keys and create weblate files from karrot",
+    help="init diff from weblate/locale-en.json keys and create weblate files from upstream",
 )
 
 parser.add_argument(
@@ -23,17 +23,17 @@ parser.add_argument(
     action="store_true",
     default=False,
     dest="merge_diff",
-    help="merge diff from weblate over karrot and (re-)create project files",
+    help="merge diff from weblate over upstream and (re-)create project files",
 )
 
 
 parser.add_argument(
-    "-k",
-    "--update-karrot",
+    "-u",
+    "--update-upstream",
     action="store_true",
     default=False,
     dest="update_karrot",
-    help="pull new karrot locale versions from github",
+    help="pull new upstream locale versions from github",
 )
 
 parser.add_argument(
@@ -47,6 +47,38 @@ parser.add_argument(
 
 args = parser.parse_args()
 
+upstream_url = "https://raw.githubusercontent.com/yunity/karrot-frontend/master/src/locales/{}"
+LANG_CODES = [
+    "ar",
+    "cs",
+    "da",
+    "de",
+    "en",
+    "eo",
+    "es",
+    "fa",
+    "fa_IR",
+    "fr",
+    "gu",
+    "hi",
+    "hr",
+    "it",
+    "ja",
+    "lb",
+    "mr",
+    "nl",
+    "pl",
+    "pt",
+    "pt_BR",
+    "ro",
+    "ru",
+    "sv",
+    "zh_Hans",
+    "zh_Hant",
+]
+
+
+# requirements
 script_dir = os.path.dirname(os.path.realpath(__file__))
 karrot_dir = os.path.join(script_dir, 'upstream')
 weblate_dir = os.path.join(script_dir, 'translate')
@@ -56,6 +88,7 @@ for this_dir in [karrot_dir, weblate_dir, project_dir]:
     if not os.path.isdir(this_dir):
         os.mkdir(this_dir)
     assert os.path.isdir(this_dir), "Please create {}".format(this_dir)
+
 
 def _p(filename):
     # create a printable version of a filepath+name
@@ -142,7 +175,7 @@ def make_suggestions(base_content, head_content, weblate_en, karrot_en, keep):
     return keep
 
 
-def init_diff(karrot_file, weblate_file, diff_file, weblate_en, karrot_en):
+def create_diff(karrot_file, weblate_file, diff_file, weblate_en, karrot_en):
     print("Init diff in {}".format(_p(diff_file)))
     with open(karrot_file, 'r', encoding='utf8') as karrot_fh:
         karrot_content = json.load(karrot_fh)
@@ -155,6 +188,44 @@ def init_diff(karrot_file, weblate_file, diff_file, weblate_en, karrot_en):
     with open(diff_file, 'w', encoding='utf8') as result_fh:
         json.dump(suggestions_content, result_fh, indent=4, ensure_ascii=False)
     return True
+
+
+def init_diff():
+    print("Running init …")
+
+    karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
+
+    if not os.path.isfile(karrot_filename):
+        print("Please pull new karrot locales with -u/--update-upstream")
+        return True
+
+    weblate_init_filename = os.path.join(weblate_dir, 'init.json')
+    diff_filename = os.path.join(weblate_dir, 'locale-en.json')
+    if not (os.path.isfile(weblate_init_filename) and os.path.isfile(diff_filename)):
+        print("Copying {} to {}".format(_p(karrot_filename), _p(weblate_init_filename)))
+        shutil.copyfile(karrot_filename, weblate_init_filename)
+        print("Edit {} now and re-run init to generate the first diff".format(_p(weblate_init_filename)))
+        return True
+
+    if not os.path.isfile(diff_filename):
+        print("Creating diff of {} and {}".format(_p(weblate_init_filename), _p(karrot_filename)))
+        keep_diff(karrot_filename, weblate_init_filename, diff_filename)
+        print("You might want to check {} now and re-run init".format(_p(diff_filename)))
+        return True
+
+    print("Initing diffs based on keys in {} and content locales in {}".format(_p(diff_filename), karrot_dir))
+
+    with open(diff_filename, 'r', encoding='utf8') as weblate_fh:
+        weblate_en = json.load(weblate_fh)
+    with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
+        karrot_en = json.load(karrot_fh)
+
+    for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
+        file_name = os.path.basename(base_file)
+        diff_file = os.path.join(weblate_dir, file_name)
+        head_file = os.path.join(weblate_dir, file_name)
+        create_diff(base_file, head_file, diff_file, weblate_en, karrot_en)
+    print("You can upload the diff files to your translation interface now.")
 
 
 def keep_diff(base_file, head_file, diff_file):
@@ -226,100 +297,44 @@ def merge_file(karrot_file, weblate_file, result_file, weblate_en, karrot_en):
     return True
 
 
-LANG_CODES = [
-    "ar",
-    "cs",
-    "da",
-    "de",
-    "en",
-    "eo",
-    "es",
-    "fa",
-    "fa_IR",
-    "fr",
-    "gu",
-    "hi",
-    "hr",
-    "it",
-    "ja",
-    "lb",
-    "mr",
-    "nl",
-    "pl",
-    "pt",
-    "pt_BR",
-    "ro",
-    "ru",
-    "sv",
-    "zh_Hans",
-    "zh_Hant",
-]
+def merge_diff():
+    print("Merging locales cleverly from {} and {} into {}".format(_p(karrot_dir), _p(weblate_dir), _p(project_dir)))
+    karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
+    with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
+        karrot_en = json.load(karrot_fh)
+    weblate_file = os.path.join(weblate_dir, 'locale-en.json')
+    with open(weblate_file, 'r', encoding='utf8') as weblate_fh:
+        weblate_en = json.load(weblate_fh)
+    for karrot_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
+        file_name = os.path.basename(karrot_file)
+        weblate_file = os.path.join(weblate_dir, file_name)
+        result_file = os.path.join(project_dir, file_name)
+        merge_file(karrot_file, weblate_file, result_file, weblate_en, karrot_en)
+
+
+def update_karrot():
+    print("Updating karrot locales")
+    this_url = upstream_url
+    out_dir = karrot_dir
+    for lang_code in LANG_CODES:
+        get_file(lang_code, this_url, out_dir)
+    return True
 
 
 def main():
 
     if args.update_karrot:
-        print("Updating karrot locales")
-        this_url = "https://raw.githubusercontent.com/yunity/karrot-frontend/master/src/locales/{}"
-        out_dir = karrot_dir
-        for lang_code in LANG_CODES:
-            get_file(lang_code, this_url, out_dir)
+        update_karrot()
 
     if args.update_project:
         print("Updating project locales")
         raise NotImplementedError
 
     if args.init_diff:
-
-        print("Running init …")
-
-        karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
-
-        if not os.path.isfile(karrot_filename):
-            print("Please pull new karrot locales with -k/--update-karrot")
-            return True
-
-        weblate_init_filename = os.path.join(weblate_dir, 'karrot-en.json')
-        diff_filename = os.path.join(weblate_dir, 'locale-en.json')
-        if not (os.path.isfile(weblate_init_filename) and os.path.isfile(diff_filename)):
-            print("Copying {} to {}".format(_p(karrot_filename), _p(weblate_init_filename)))
-            shutil.copyfile(karrot_filename, weblate_init_filename)
-            print("Edit {} now and re-run init to generate the first diff".format(_p(weblate_init_filename)))
-            return True
-
-        if not os.path.isfile(diff_filename):
-            print("Creating diff of {} and {}".format(_p(weblate_init_filename), _p(karrot_filename)))
-            keep_diff(karrot_filename, weblate_init_filename, diff_filename)
-            print("You might want to check {} now and re-run init".format(_p(diff_filename)))
-            return True
-
-        print("Initing diffs based on keys in {} and content locales in {}".format(_p(diff_filename), karrot_dir))
-
-        with open(diff_filename, 'r', encoding='utf8') as weblate_fh:
-            weblate_en = json.load(weblate_fh)
-        with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
-            karrot_en = json.load(karrot_fh)
-
-        for base_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            file_name = os.path.basename(base_file)
-            diff_file = os.path.join(weblate_dir, file_name)
-            head_file = os.path.join(weblate_dir, file_name)
-            init_diff(base_file, head_file, diff_file, weblate_en, karrot_en)
-        print("You can upload the diff files to your translation interface now.")
+        init_diff()
 
     if args.merge_diff:
-        print("Merging locales cleverly from {} and {} into {}".format(_p(karrot_dir), _p(weblate_dir), _p(project_dir)))
-        karrot_filename = os.path.join(karrot_dir, 'locale-en.json')
-        with open(karrot_filename, 'r', encoding='utf8') as karrot_fh:
-            karrot_en = json.load(karrot_fh)
-        weblate_file = os.path.join(weblate_dir, 'locale-en.json')
-        with open(weblate_file, 'r', encoding='utf8') as weblate_fh:
-            weblate_en = json.load(weblate_fh)
-        for karrot_file in glob.glob(os.path.join(karrot_dir, 'locale-*.json')):
-            file_name = os.path.basename(karrot_file)
-            weblate_file = os.path.join(weblate_dir, file_name)
-            result_file = os.path.join(project_dir, file_name)
-            merge_file(karrot_file, weblate_file, result_file, weblate_en, karrot_en)
+        merge_diff()
 
 
 if __name__ == "__main__":
